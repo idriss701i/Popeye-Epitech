@@ -16,10 +16,10 @@ services:
             FLASK_RUN_HOST: 0.0.0.0
         restart: always
     worker:
-        build:
-            context: ./worker
         networks:
             - back-tier
+         build:
+            context: ./worker    
         depends_on:
             - redis
             - db
@@ -30,10 +30,10 @@ services:
     result:
         build: ./result
         command: node server.js
-        environment:
-            PORT: 80
         ports:
             - "5001:80"
+        environment:
+            PORT: 80       
         networks:
             - result-tier
         depends_on:
